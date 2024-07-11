@@ -1,0 +1,20 @@
+
+.scrollbar-container{
+    padding: 5px;
+  }
+  .MyContacts{
+    max-height: 79.1vh;
+    overflow:auto;
+    overflow-y: scroll;
+    padding: 5px;
+  }
+  .MyContacts::-webkit-scrollbar{
+    width: 5px;
+  }
+  .MyContacts::-webkit-scrollbar-thumb{
+    background: #02adad;
+    border-radius: 20px;
+  }
+  .MyContacts::-webkit-scrollbar-thumb:hover{
+    background: #009797;
+  }

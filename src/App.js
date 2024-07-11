@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './App.css';
 import Navigation from './Components/Navigation';
 import Contacts from './Components/Contacts';
@@ -7,6 +7,7 @@ import ContactForm from "./Components/ContactForm";
 import ContactsDetails from "./Components/Contact-details";
 
 function App() {
+  // State to manage the list of contacts
   const [contactList, setContactList] = useState([
     {
       contactID: Math.floor(Math.random() * 500000),
@@ -23,34 +24,55 @@ function App() {
       Address: "Baydhabo, Somalia",
     },
   ]);
-  const [showForm, setShowForm] = useState(false);
-  const [selectedContact, setSelectedContact] = useState(null);
+  const [showForm, setShowForm] = useState(false); // State to toggle the visibility of the contact form
+  const [selectedContact, setSelectedContact] = useState(null); // State to store the selected contact for detailed view
+  const [showNav, setShowNav] = useState(false); // State to toggle the visibility of the navigation
 
-  function handleShowForm() {
-    setShowForm(!showForm);
-  }
+  // Effect to initialize contact list from local storage on mount
+  useEffect(() => {
+    const storedContacts = localStorage.getItem('contactList');
+    if (storedContacts) {
+      setContactList(JSON.parse(storedContacts));
+    } else {
+      localStorage.setItem('contactList', JSON.stringify([]));
+    }
+  }, []);
 
-  function AddContact(newContact) {
-    setContactList([...contactList, newContact]);
-  }
+  // Effect to update local storage whenever the contact list changes
+  useEffect(() => {
+    localStorage.setItem('contactList', JSON.stringify(contactList));
+  }, [contactList]);
+
+  // Function to toggle the contact form visibility
+  const handleShowForm = () => setShowForm(!showForm);
+
+  // Function to toggle the navigation visibility
+  const handleshowNav = () => setShowNav(!showNav);
+
+  // Function to add a new contact to the list
+  const addContact = (newContact) => setContactList([...contactList, newContact]);
+
+  // Function to update an existing contact in the list
+  const updateContact = (updatedContact) => {
+    setContactList(contactList.map(contact => contact.contactID === updatedContact.contactID ? updatedContact : contact));
+    setSelectedContact(updatedContact);
+  };
 
   return (
     <Router>
       <div className="App">
         <header className="App-header">
-          <i className="fa-solid fa-bars btn-menu"></i>
+          <i className="fa-solid fa-bars btn-menu" onClick={handleshowNav}></i>
           <h1>Contacts</h1>
-          <button className="Add-Contact-btn" onClick={handleShowForm} >
-            <i class='fa-solid fa-Plus' />
+          <button className="Add-Contact-btn" onClick={handleShowForm}>
+            <i className='fa-solid fa-plus'></i>
           </button>
-          {showForm && (
-            <ContactForm close={handleShowForm} AddContact={AddContact} />
-          )}
+          {showForm && <ContactForm close={handleShowForm} addContact={addContact} />}
         </header>
         <div className='Container'>
-          <Navigation contactCount={contactList.length} />
-          <Contacts contactList={contactList} setSelectedContact={setSelectedContact} />
-          <ContactsDetails selectedContact={selectedContact} />
+          <Navigation showNav={showNav} contactCount={contactList.length} handleshowNav={handleshowNav} />
+          <Contacts contactList={contactList} setContactList={setContactList} setSelectedContact={setSelectedContact} />
+          <ContactsDetails selectedContact={selectedContact} updateContact={updateContact} />
         </div>
       </div>
     </Router>

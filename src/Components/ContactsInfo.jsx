@@ -1,31 +1,27 @@
 import React from 'react'
-import '../CssModule/ContactsInfo.css'
+import '../App.css'
 import img from "../images/20220610181618_IMG_0982_resized.JPG"
 function ContactsInfo() {
     return (
         <div className="Contacts-details" >
-            <div className="Contacts-details">
-              <div className="Contact-details-header">
-                  <img src={selectedContact.img} alt="" />
-                  <label htmlFor="Upload-img"><i class="fa-solid fa-camera-rotate"></i></label>
-                  <input type="file" accept='image/*' id='Upload-img'/>
-                  <input type='text' value={selectedContact.Name} />
-              </div>
-              <hr />
-              <div className="Contact-Additional-Details">
+            <div className="Contact-details-header">
+              <img src={img} alt="" />
+              <input type='text' value={"Shafie isak warsame"} />
+            </div>
+            <hr />
+            <div className="Contact-Additional-Details">
                 <div>
-                  <label htmlFor="Phone"><i className="fa-solid fa-phone"></i> Phone: </label>
-                  <input type='text' value={selectedContact.Phone} />
+                  <label htmlFor="Phone"><i class="fa-solid fa-phone"></i> Phone: </label>
+                  <input type='text' value={25261435583} />
                 </div>
                 <div>
-                  <label htmlFor="Email"><i className="fa-solid fa-envelope"></i> Email: </label>
-                  <input type='text' value={selectedContact.Email || "N/A"} />
+                  <label htmlFor="Email"><i class="fa-solid fa-envelope"></i> Email: </label>
+                  <input type='text' value={"Shafieiska@gmail.com"} />
                 </div>
                 <div>
-                  <label htmlFor="Address"><i className="fa-solid fa-location-dot"></i> Address: </label>
-                  <input type='text' value={selectedContact.Address} />
+                  <label htmlFor="Address"><i class="fa-solid fa-location-dot"></i> Address: </label>
+                  <input type='text' value={"Dayniile,Mogadisho,Banadir"}/>
                 </div>
-              </div>
             </div>
            </div>
     )

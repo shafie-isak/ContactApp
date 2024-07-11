@@ -2,16 +2,17 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Arial, sans-serif;
     text-decoration: none;
-    font-family: Arial, Helvetica, sans-serif;
-}
+  }
 
-.Contact{
+  .Contact{
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
     top: 57px;
+    outline: 1px solid #cfeeee;
   }
   
   .Contact .img-Container{
@@ -36,6 +37,7 @@
     width: 90%;
     padding: 10px 0px;
     padding-left: 15px;
+    border-bottom: 1px solid #cfeeee;
   }
   .Contact .Name-Container{
     width: 80%;
@@ -95,14 +97,13 @@
     transition: 0.5s;
   }
   .three-dot-container{
-    position: relative;
     display: inline-block;
     padding: 27px 0px;
     width: 10%;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-left: 1px solid #cfeeee;
+    outline: 1px solid #cfeeee;
   }
   .three-dot-container:hover{
     background-color: #cfeeee;
