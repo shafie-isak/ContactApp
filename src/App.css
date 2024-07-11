@@ -66,16 +66,6 @@ body{
 }
 
 
-.error {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  background-color: red;
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
-  z-index: 1000;
-}
 
 /* For tablets */
 @media only screen and (max-width: 1024px) {
@@ -89,14 +79,21 @@ body{
   }
   .Navigation{
     display: none;
-    height: 100vh;
-    position: absolute;
-    top: 0;
-    left: 0;
   }
   .Navigation .btn-Cancel{
     display: block;
     cursor: pointer;
+  }
+  #Hidden{
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    z-index: 1;
+  }
+  .btn-Cancel{
+    display: block;
   }
   
 }
@@ -110,5 +107,6 @@ body{
     position: fixed;
     right: 0;
     width: 90%;
+    box-shadow: 1px 1px 15px rgba(0, 9, 0, 0.4);
   }
 }
