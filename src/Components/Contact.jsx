@@ -1,27 +1,26 @@
 import React, { useState, useRef, useEffect } from "react";
 import '../CssModule/Contact.css';
 
-// Contact component to display individual contacts
-const Contact = ({ contactList = [], setContactList, setSelectedContact }) => {
+const Contact = ({ contactList = [], setSelectedContact, deleteContact }) => {
   const [showDelete, setShowDelete] = useState(false);
   const [activeContact, setActiveContact] = useState(null);
   const containerRef = useRef(null);
 
-  // Handle click on three dots to show delete button
   const handleThreeDotClick = (event, contactID) => {
     event.stopPropagation();
     setActiveContact(contactID);
     setShowDelete(true);
   };
 
-  // Handle contact deletion
-  const handleDeleteContact = (contactID) => {
-    const updatedContacts = contactList.filter(contact => contact.contactID !== contactID);
-    setContactList(updatedContacts);
-    setShowDelete(false);
+  const handleDeleteContact = async (contactID) => {
+    try {
+      await deleteContact(contactID);
+      setShowDelete(false);
+    } catch (error) {
+      alert(`Error deleting contact: ${error.message}`);
+    }
   };
 
-  // Handle click outside to hide delete button
   const handleClickOutside = (event) => {
     if (containerRef.current && !containerRef.current.contains(event.target)) {
       setShowDelete(false);
@@ -39,7 +38,7 @@ const Contact = ({ contactList = [], setContactList, setSelectedContact }) => {
   return (
     <div ref={containerRef}>
       {contactList.map(contact => (
-        <div key={contact.contactID} onClick={() => setSelectedContact(contact)} className="Contact">
+        <div key={contact.id} onClick={() => setSelectedContact(contact)} className="Contact">
           <div className="info">
             <div className="img-Container">
               <img src={contact.img} alt="" />
@@ -49,11 +48,11 @@ const Contact = ({ contactList = [], setContactList, setSelectedContact }) => {
               <p>{contact.Phone}</p>
             </div>
           </div>
-          <div className="three-dot-container" style={{ position: activeContact === contact.contactID ? "relative" : "static" }} onClick={(e) => handleThreeDotClick(e, contact.contactID)} >
+          <div className="three-dot-container" style={{ position: activeContact === contact.id ? "relative" : "static" }} onClick={(e) => handleThreeDotClick(e, contact.id)}>
             <i className="fa-solid fa-ellipsis-vertical"></i>
-            {showDelete && activeContact === contact.contactID && (
+            {showDelete && activeContact === contact.id && (
               <div className="Delete-container">
-                <button className="btn-Delete" onClick={() => handleDeleteContact(contact.contactID)}>
+                <button className="btn-Delete" onClick={() => handleDeleteContact(contact.id)}>
                   <i className="fa-solid fa-trash"></i> Delete
                 </button>
               </div>

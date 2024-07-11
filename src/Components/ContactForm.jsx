@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import '../CssModule/ContactForm.css';
 import img from '../images/default-avatar-icon-of-social-media-user-vector.jpg';
 
-// ContactForm component to add a new contact
 const ContactForm = ({ close, addContact }) => {
   const [formState, setFormState] = useState({ Name: "", Phone: "", Email: "", Address: "" });
   const [imgPreview, setImgPreview] = useState("");
+  const [imageFile, setImageFile] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -14,6 +14,7 @@ const ContactForm = ({ close, addContact }) => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    setImageFile(file);
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => setImgPreview(reader.result);
@@ -21,12 +22,20 @@ const ContactForm = ({ close, addContact }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newContact = { ...formState, contactID: Math.floor(Math.random() * 500000), img: imgPreview || img };
+    let imgUrl = img;
+    if (imageFile) {
+      imgUrl = imgPreview;
+    }
+    const newContact = { ...formState, contactID: Math.floor(Math.random() * 500000), img: imgUrl };
     if (newContact.Phone) {
-      addContact(newContact);
-      close();
+      try {
+        await addContact(newContact);
+        close();
+      } catch (error) {
+        alert(`Error adding contact: ${error.message}`);
+      }
     }
   };
 

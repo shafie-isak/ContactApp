@@ -1,27 +1,34 @@
 import React, { useState, useEffect } from "react";
 import '../CssModule/ContactDetails.css';
 
-// ContactsDetails component to show and edit details of selected contact
 const ContactsDetails = ({ selectedContact, updateContact }) => {
   const [formState, setFormState] = useState({ ...selectedContact });
+  const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
     setFormState({ ...selectedContact });
   }, [selectedContact]);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = async (e) => {
     const { name, value } = e.target;
-    setFormState(prevState => ({ ...prevState, [name]: value }));
-    updateContact({ ...formState, [name]: value });
+    const updatedContact = { ...formState, [name]: value };
+    setFormState(updatedContact);
+    try {
+      await updateContact(updatedContact);
+    } catch (error) {
+      alert(`Error updating contact: ${error.message}`);
+    }
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    setImageFile(file);
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setFormState(prevState => ({ ...prevState, img: reader.result }));
-        updateContact({ ...formState, img: reader.result });
+        const updatedContact = { ...formState, img: reader.result };
+        setFormState(updatedContact);
+        handleInputChange({ target: { name: 'img', value: reader.result } });
       };
       reader.readAsDataURL(file);
     }

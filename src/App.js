@@ -5,57 +5,60 @@ import Contacts from './Components/Contacts';
 import { BrowserRouter as Router } from 'react-router-dom';
 import ContactForm from "./Components/ContactForm";
 import ContactsDetails from "./Components/Contact-details";
+import { db } from './firebaseConfig';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
 
 function App() {
-  // State to manage the list of contacts
-  const [contactList, setContactList] = useState([
-    {
-      contactID: Math.floor(Math.random() * 500000),
-      img: "https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg",
-      Name: "Shafie Isak Warsame",
-      Phone: "+252614353583",
-      Address: "Mogadishu, Somalia",
-    },
-    {
-      contactID: Math.floor(Math.random() * 500000),
-      img: "C:/Users/king Shafie/Pictures/Camera Roll/c8956c3320abdbd11fb3363852e40655.jpg",
-      Name: "Shukri Isak Warsame",
-      Phone: "+252612447992",
-      Address: "Baydhabo, Somalia",
-    },
-  ]);
-  const [showForm, setShowForm] = useState(false); // State to toggle the visibility of the contact form
-  const [selectedContact, setSelectedContact] = useState(null); // State to store the selected contact for detailed view
-  const [showNav, setShowNav] = useState(false); // State to toggle the visibility of the navigation
+  const [contactList, setContactList] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const [selectedContact, setSelectedContact] = useState(null);
+  const [showNav, setShowNav] = useState(false);
 
-  // Effect to initialize contact list from local storage on mount
   useEffect(() => {
-    const storedContacts = localStorage.getItem('contactList');
-    if (storedContacts) {
-      setContactList(JSON.parse(storedContacts));
-    } else {
-      localStorage.setItem('contactList', JSON.stringify([]));
-    }
+    const fetchContacts = async () => {
+      try {
+        const contactsCollection = collection(db, "contacts");
+        const contactsSnapshot = await getDocs(contactsCollection);
+        const contactsList = contactsSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+        setContactList(contactsList);
+      } catch (error) {
+        alert(`Error fetching contacts: ${error.message}`);
+      }
+    };
+    fetchContacts();
   }, []);
 
-  // Effect to update local storage whenever the contact list changes
-  useEffect(() => {
-    localStorage.setItem('contactList', JSON.stringify(contactList));
-  }, [contactList]);
-
-  // Function to toggle the contact form visibility
   const handleShowForm = () => setShowForm(!showForm);
-
-  // Function to toggle the navigation visibility
   const handleshowNav = () => setShowNav(!showNav);
 
-  // Function to add a new contact to the list
-  const addContact = (newContact) => setContactList([...contactList, newContact]);
+  const addContact = async (newContact) => {
+    try {
+      const docRef = await addDoc(collection(db, "contacts"), newContact);
+      setContactList([...contactList, { ...newContact, id: docRef.id }]);
+    } catch (error) {
+      alert(`Error adding contact: ${error.message}`);
+    }
+  };
 
-  // Function to update an existing contact in the list
-  const updateContact = (updatedContact) => {
-    setContactList(contactList.map(contact => contact.contactID === updatedContact.contactID ? updatedContact : contact));
-    setSelectedContact(updatedContact);
+  const updateContact = async (updatedContact) => {
+    try {
+      const contactRef = doc(db, "contacts", updatedContact.id);
+      await updateDoc(contactRef, updatedContact);
+      setContactList(contactList.map(contact => contact.id === updatedContact.id ? updatedContact : contact));
+      setSelectedContact(updatedContact);
+    } catch (error) {
+      alert(`Error updating contact: ${error.message}`);
+    }
+  };
+
+  const deleteContact = async (contactId) => {
+    try {
+      const contactRef = doc(db, "contacts", contactId);
+      await deleteDoc(contactRef);
+      setContactList(contactList.filter(contact => contact.id !== contactId));
+    } catch (error) {
+      alert(`Error deleting contact: ${error.message}`);
+    }
   };
 
   return (
@@ -71,7 +74,7 @@ function App() {
         </header>
         <div className='Container'>
           <Navigation showNav={showNav} contactCount={contactList.length} handleshowNav={handleshowNav} />
-          <Contacts contactList={contactList} setContactList={setContactList} setSelectedContact={setSelectedContact} />
+          <Contacts contactList={contactList} setContactList={setContactList} setSelectedContact={setSelectedContact} deleteContact={deleteContact} />
           <ContactsDetails selectedContact={selectedContact} updateContact={updateContact} />
         </div>
       </div>
