@@ -1,38 +1,58 @@
-.App {
-  text-align: center;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  text-decoration: none;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html{
+  scrollbar-width: none;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.App-header{
+  background-color: #0f6868;
+  padding: 10px;
+  color: #fff;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+}
+.App-header .btn-menu{
+  margin: 0px 10px;
+  font-size: 30px;
+  display: none;
+}
+.Add-Contact-btn{
+  border: none;
+  padding: 7px 30px;
+  background-color: #bbe7e7;
+  border-radius: 15px;
+  color: #0f6868;
+  margin: 0px 20px;
+  display: flex;
+  align-items: center;
+  font-size: 17px;
+}
+
+.Add-Contact-btn:hover{
+  color: #bbe7e7;
+  background-color: #009797;
+  transition: 0.3s;
+}
+.Container{
+  display: grid;
+  grid-template-columns: 1fr 1.3fr 2fr;
+}
+
+
+/* Navigation Component Sytyle Starts here */
+
+
+/* Contacts details Component Style starts here */
+
+.Contacts-details-Container{
+  background-color: #cfeeee;
+  height: 622px;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  align-items: center;
 }

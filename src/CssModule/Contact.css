@@ -1,0 +1,109 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.Contact{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    top: 57px;
+  }
+  
+  .Contact .img-Container{
+    width: 50px;
+    height: 50px;
+    background-color: #0f6868;
+    border-radius: 50%;
+    padding: 2px;
+    margin-right:10px;
+    display: flex;
+    align-items: center;
+  }
+  .Contact .img-Container img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .Contact .info{
+    display: flex;
+    align-items: center;
+    width: 90%;
+    padding: 10px 0px;
+    padding-left: 15px;
+  }
+  .Contact .Name-Container{
+    width: 80%;
+  }
+  .Contact .info:hover{
+    background-color: #cfeeee;
+  }
+  .Contact .Name-Container input{
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    font-size: 18px;
+    outline: none;
+    color: #0f6868;
+    cursor: pointer;
+  }
+  
+  .Contact .Name-Container p{
+    font-size: 15px;
+    color: #009797;
+  }
+  .Contact .three-dot{
+    color: #0f6868;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  .Contact .three-dot:hover{
+    background-color: #ddf8f8;
+    border-radius: 50px;
+  }
+  .Delete-container{
+    background-color: #bbe7e7;
+    border-radius: 10px;
+    width: 120px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #009797;
+    position: absolute;
+    top: 2.2rem;
+    right: 10rem;
+    transform: translate(100%, -50%);
+    z-index: 1;
+  }
+  .Delete-container .btn-Delete{
+    border: none;
+    color: #ff0000;
+    font-size: 15px;
+    background-color: inherit;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 10px;
+  }
+  .Delete-container:hover{
+    background-color: #9ed1d1;
+    transition: 0.5s;
+  }
+  .three-dot-container{
+    position: relative;
+    display: inline-block;
+    padding: 27px 0px;
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid #cfeeee;
+  }
+  .three-dot-container:hover{
+    background-color: #cfeeee;
+  }

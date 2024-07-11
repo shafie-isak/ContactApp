@@ -1,0 +1,63 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.Navigation{
+    background-color: #335c5c;
+    height: 622px;
+    color: #fff;
+    padding: 10px;
+  }
+  .Navigation .btn-Cancel{
+    margin: 10px;
+    font-size: 30px;
+    display: none;
+  }
+  
+  .Navigation .Add-Contact-btn span{
+    font-size: 30px;
+  }
+  .Navigation nav{
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #009797;
+  }
+  .Navigation nav .Link{
+    text-decoration: none;
+    color: #bbe7e7;
+    padding: 10px 15px;
+    background-color: #335c5c;
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 7px;
+    border: 1px solid #009797;
+  }
+  .Navigation nav .Link:hover{
+    background-color: #009797;
+    transition: 0.5s;
+  }
+  .Navigation nav .Link i{
+    margin-right: 10px;
+  }
+  .active{
+    background-color: #009797 !important;
+  }
+  .Navigation nav .hero-link{
+    display: flex;
+    align-items: center;
+  }
+  .Navigation nav .Link .Counter{
+    color: #bbe7e7;
+    text-align: center;
+    border: 1px solid #bbe7e7;
+    width: 32px;
+    border-radius: 10px;
+    margin-left: 120px;
+    padding: 2px;
+  }
